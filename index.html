@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poukładane — Ośrodek psychoterapii w Gdańsku Wrzeszczu</title>
+<meta name="description" content="Poukładane — ośrodek psychoterapii w Gdańsku Wrzeszczu. Psychoterapia indywidualna dla osób dorosłych, młodzieży i par, psychotraumatologia, wsparcie w rozwoju i kryzysach.">
+<link rel="icon" href="fav.png" type="image/png">
+<link rel="apple-touch-icon" href="fav.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Fraunces:opsz,wght@9..144,300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Filtr gooey: musi być w DOM, ale jest niewidoczny -->
+<svg class="goo-filter" aria-hidden="true">
+  <defs>
+    <!-- Obszar filtra rozszerzony, żeby rozmycie nie było przycinane przy krawędziach.
+         Wysoki mnożnik kanału alfa (35) daje ostrą krawędź kropek —
+         przy niższej wartości brzegi wychodziły miękkie i rozmyte. -->
+    <filter id="gooeyness" x="-20%" y="-20%" width="140%" height="140%"
+            color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 35 -16" result="gooey"/>
+      <feComposite in="SourceGraphic" in2="gooey" operator="atop"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- Belka: logo po lewej, menu po prawej -->
+<header class="masthead">
+  <a class="masthead__logo" href="#osrodek" data-goto="osrodek">
+    <img class="logo" src="logo.png" alt="Poukładane — Ośrodek psychoterapii">
+  </a>
+
+  <nav class="nav" aria-label="Menu główne">
+    <div class="nav__track">
+      <input type="radio" name="nav" id="nav-osrodek"     class="nav__dot" value="osrodek" checked>
+      <input type="radio" name="nav" id="nav-specjalisci" class="nav__dot" value="specjalisci">
+      <input type="radio" name="nav" id="nav-cennik"      class="nav__dot" value="cennik">
+      <input type="radio" name="nav" id="nav-kontakt"     class="nav__dot" value="kontakt">
+      <span class="nav__ball" aria-hidden="true"></span>
+    </div>
+    <div class="nav__labels">
+      <label class="nav__label" for="nav-osrodek">ośrodek</label>
+      <label class="nav__label" for="nav-specjalisci">specjaliści</label>
+      <label class="nav__label" for="nav-cennik">cennik</label>
+      <label class="nav__label" for="nav-kontakt">kontakt</label>
+    </div>
+  </nav>
+</header>
+
+<main class="stage">
+  <div class="panels">
+
+    <!-- ══════════ OŚRODEK ══════════ -->
+    <section class="panel" id="panel-osrodek">
+
+      <div class="hero">
+        <div class="hero__text">
+          <p class="eyebrow">Ośrodek psychoterapii</p>
+          <h1>Tworzymy przestrzeń terapeutyczną, w której można w komfortowych
+          warunkach uporządkować swoje myśli, emocje oraz relacje z innymi.</h1>
+          <p class="lead">Prowadzimy indywidualną psychoterapię dla osób dorosłych,
+          młodzieży oraz par. Pomagamy w osobistym rozwoju oraz w pokonywaniu
+          trudnych momentów w życiu.</p>
+          <p class="hero__actions"><a class="cta__link" href="#kontakt" data-goto="kontakt">Kontakt →</a></p>
+        </div>
+        <figure class="hero__figure">
+          <img src="IMG/Waso_01.jpg" alt="Wnętrze ośrodka Poukładane">
+        </figure>
+      </div>
+
+      <div class="beat reveal">
+        <figure class="beat__figure"><img src="IMG/Waso_02.jpg" alt="Wnętrze ośrodka" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="eyebrow">O ośrodku</p>
+          <h2>Poukładane działa od marca 2022 roku w Gdańsku Wrzeszczu.</h2>
+          <p>W ośrodku prowadzona jest psychoterapia indywidualna dla osób dorosłych,
+          młodzieży i par, pomoc w obszarze psychotraumatologii, wsparcie w rozwoju
+          osobistym i kryzysach.</p>
+        </div>
+      </div>
+
+      <div class="beat beat--flip reveal">
+        <figure class="beat__figure"><img src="IMG/Waso_03.jpg" alt="Wnętrze ośrodka" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="eyebrow">Dla kogo</p>
+          <h2>To bezpieczne miejsce dla osób zmagających się z trudnościami w relacjach.</h2>
+          <p>Przyjmujemy osoby przeżywające kryzys psychiczny, mające za sobą doświadczenia
+          traumatyczne, chorujące psychicznie lub mające trudności z wyrażaniem emocji.</p>
+        </div>
+      </div>
+
+      <div class="beat reveal">
+        <figure class="beat__figure"><img src="IMG/Waso_04.jpg" alt="Wnętrze ośrodka" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="eyebrow">O zespole</p>
+          <h2>Zespół tworzą osoby po całościowym akredytowanym kursie psychoterapii.</h2>
+          <p>Kurs atestowany jest przez Sekcję Naukową Psychoterapii Polskiego Towarzystwa
+          Psychiatrycznego lub przez Sekcję Psychoterapii Polskiego Towarzystwa
+          Psychologicznego.</p>
+        </div>
+      </div>
+
+      <div class="beat beat--flip reveal">
+        <figure class="beat__figure"><img src="IMG/Waso_05.jpg" alt="Wnętrze ośrodka" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="eyebrow">Superwizja</p>
+          <h2>Zespół regularnie uczestniczy w superwizjach i spotkaniach klinicznych.</h2>
+          <p>Superwizje indywidualne, grupowe oraz spotkania kliniczne pozwalają dbać
+          o kompleksowość i najwyższą jakość świadczonej pomocy.</p>
+          <p>Specjaliści pracują pod stałą superwizją indywidualną i są zobowiązani
+          do przestrzegania kodeksu etyki psychoterapeutów.</p>
+        </div>
+      </div>
+
+      <!-- ── FAQ ── -->
+      <section class="block">
+        <div class="faq">
+          <div class="faq__head">
+            <p class="eyebrow">FAQ</p>
+            <h2>Najczęstsze pytania</h2>
+            <figure class="faq__figure reveal"><img src="IMG/Waso_06.jpg" alt="Wnętrze ośrodka" loading="lazy"></figure>
+          </div>
+
+          <div class="faq__list">
+            <details>
+              <summary>W jakich sytuacjach warto rozważyć psychoterapię?</summary>
+              <p>Na terapię warto się zgłosić zawsze wtedy, gdy czujesz, że coś w Twoim życiu
+              sprawia Ci trudność, przytłacza Cię, niepokoi lub powtarza się, mimo Twoich starań,
+              żeby to zmienić.</p>
+              <p>Psychoterapia może pomóc, jeśli:</p>
+              <ul>
+                <li>trudno Ci radzić sobie z emocjami, stresem, lękiem czy poczuciem winy,</li>
+                <li>masz problemy w relacjach, w pracy lub w podejmowaniu decyzji,</li>
+                <li>przeżywasz żałobę, stratę, rozstanie,</li>
+                <li>chcesz lepiej zrozumieć siebie, swoje potrzeby i sposób funkcjonowania.</li>
+              </ul>
+              <p>Nie musisz mieć jasno określonego celu — psychoterapeuta pomoże Ci go wspólnie
+              doprecyzować podczas pierwszych spotkań.</p>
+            </details>
+
+            <details>
+              <summary>Jak wygląda pierwsze spotkanie z psychoterapeutą? Czy trzeba się do niego przygotować?</summary>
+              <p>Nie musisz się specjalnie przygotowywać. Pierwsza konsultacja to rozmowa, podczas
+              której terapeuta stara się poznać Twoją sytuację, zrozumieć, co Cię do niego sprowadza
+              i jak mógłby Ci pomóc.</p>
+              <p>To też moment, żebyś Ty mogła/mógł zobaczyć, czy dobrze czujesz się w kontakcie
+              z tą osobą.</p>
+              <p>Warto jedynie pomyśleć, co skłoniło Cię do poszukania pomocy i czego potrzebujesz —
+              resztę ustalicie wspólnie.</p>
+            </details>
+
+            <details>
+              <summary>Jak wybrać psychoterapeutę?</summary>
+              <p>Najważniejsze jest to, byś czuł/a się z terapeutą bezpiecznie i swobodnie. Warto
+              zwrócić uwagę na jego kwalifikacje (ukończona szkoła psychoterapii, doświadczenie,
+              superwizja), ale też na to, czy sposób jego pracy Ci odpowiada.</p>
+              <p>Zaufanie i poczucie zrozumienia to podstawa skutecznej terapii.</p>
+            </details>
+
+            <details>
+              <summary>Czym różni się psychoterapeuta, psycholog i psychiatra?</summary>
+              <p><strong>Psycholog</strong> — ukończył studia psychologiczne. Może prowadzić diagnozy
+              psychologiczne, konsultacje i udzielać wsparcia.</p>
+              <p><strong>Psychoterapeuta</strong> — to osoba z wyższym wykształceniem (najczęściej
+              po studiach psychologicznych) po dodatkowym, kilkuletnim szkoleniu z psychoterapii,
+              przygotowana do prowadzenia długoterminowej pracy terapeutycznej.</p>
+              <p><strong>Psychiatra</strong> — to lekarz, który może przepisywać leki i prowadzić
+              leczenie farmakologiczne. Zdarza się, że psychiatrzy mają również ukończone szkolenie
+              z psychoterapii i pracują także terapeutycznie.</p>
+              <p>Czasem skuteczne wsparcie wymaga współpracy tych specjalistów.</p>
+            </details>
+
+            <details>
+              <summary>Czy psychoterapeuta może przepisywać leki?</summary>
+              <p>Nie. Leki może przepisać tylko lekarz psychiatra. Jeśli terapeuta uzna,
+              że farmakoterapia mogłaby Ci pomóc, zaproponuje konsultację u psychiatry.</p>
+            </details>
+
+            <details>
+              <summary>Czym różnią się nurty psychoterapii i jak wybrać ten dla siebie?</summary>
+              <p>Psychoterapia ma różne „języki" — czyli nurty, np. psychodynamiczny,
+              poznawczo-behawioralny, systemowy czy humanistyczny. Różnią się podejściem i metodami,
+              ale cel jest wspólny: zrozumienie Ciebie i wsparcie w zmianie.</p>
+              <p>Nie musisz znać się na nurtach — terapeuta wyjaśni, jak pracuje i czy to podejście
+              może być dla Ciebie odpowiednie.</p>
+            </details>
+
+            <details>
+              <summary>Czy psychoterapia online jest skuteczna?</summary>
+              <p>Tak. Psychoterapia online jest pełnoprawną i skuteczną formą pracy terapeutycznej,
+              także jeśli z jakiegoś powodu nie możesz lub nie chcesz spotykać się na żywo, to jest
+              to dobra alternatywa. Spotkania odbywają się przez bezpieczne platformy wideo,
+              a terapeuta pracuje w taki sam sposób, jak w gabinecie.</p>
+              <p>Warto jednak zaznaczyć, że nie wszyscy terapeuci oferują terapię online.</p>
+            </details>
+
+            <details>
+              <summary>Jak długo trwa psychoterapia i jak często odbywają się sesje?</summary>
+              <p>Czas trwania terapii zależy od Twoich potrzeb i celów. Zazwyczaj spotkania
+              odbywają się raz w tygodniu i trwają 50 minut.</p>
+              <p>Niektóre terapie trwają kilka miesięcy, inne — rok lub kilka lat. Ważne, by tempo
+              było dostosowane do Ciebie i Twojej gotowości na zmianę.</p>
+            </details>
+
+            <details>
+              <summary>Czy terapeuta może dawać „zadania domowe"?</summary>
+              <p>Czasem tak. Niektórzy terapeuci proponują refleksje lub ćwiczenia między sesjami —
+              ma to pomóc w utrwalaniu zmian. Nie jest to jednak obowiązek — każda terapia ma inny
+              rytm i styl pracy.</p>
+            </details>
+
+            <details>
+              <summary>Czy mogę zmienić terapeutę w trakcie terapii?</summary>
+              <p>Tak, możesz. Warto jednak najpierw porozmawiać o tym ze swoim terapeutą — otwarcie
+              i szczerze. Taka rozmowa często bywa ważnym momentem w procesie i może pomóc zrozumieć,
+              co się dzieje w relacji terapeutycznej.</p>
+              <p>Jeśli po rozmowie nadal chcesz zmienić terapeutę, dobrze jest wspólnie podsumować
+              dotychczasową pracę i zakończyć terapię w sposób domknięty.</p>
+            </details>
+
+            <details>
+              <summary>Czy psychoterapia naprawdę działa?</summary>
+              <p>Tak — skuteczność psychoterapii została potwierdzona w wielu badaniach naukowych.</p>
+              <p>Efekty to m.in. lepsze rozumienie siebie, większa odporność emocjonalna, poprawa
+              relacji i jakości życia.</p>
+              <p>Zmiana bywa procesem, który wymaga czasu i zaangażowania, ale naprawdę przynosi
+              trwałe rezultaty.</p>
+            </details>
+
+            <details>
+              <summary>Czy z psychoterapii mogą korzystać dzieci i młodzież?</summary>
+              <p>Tak. W naszym ośrodku pracują terapeuci specjalizujący się w pracy z dziećmi
+              i nastolatkami.</p>
+              <p>Terapia dzieci różni się od terapii dorosłych — często wykorzystuje zabawę, rysunek,
+              metaforę. Rodzice lub opiekunowie są zwykle włączeni w proces terapeutyczny.</p>
+            </details>
+
+            <details>
+              <summary>Czym różni się terapia par od terapii indywidualnej?</summary>
+              <p>W terapii par pracujemy nad relacją — nad sposobem komunikacji, bliskością,
+              zrozumieniem siebie nawzajem.</p>
+              <p>To nie terapia jednej osoby „przeciwko" drugiej, lecz wspólna przestrzeń do rozmowy
+              i odbudowy więzi.</p>
+            </details>
+
+            <details>
+              <summary>W jakich sytuacjach para może potrzebować terapii?</summary>
+              <p>Kiedy w relacji pojawia się trudność, której nie udaje się wspólnie przezwyciężyć —
+              np. częste konflikty, brak bliskości, trudność w komunikacji, zdrada, rozbieżne potrzeby.</p>
+              <p>Terapia par to szansa na lepsze zrozumienie siebie i partnera, niezależnie od tego,
+              czy para chce odbudować związek, czy dojść do decyzji o rozstaniu w sposób spokojny
+              i świadomy.</p>
+            </details>
+
+            <details>
+              <summary>Czy pary jednopłciowe mogą korzystać z terapii par?</summary>
+              <p>Oczywiście. Terapia par jest dla wszystkich osób tworzących związek — niezależnie
+              od płci czy orientacji. Każda relacja może potrzebować wsparcia i zrozumienia.</p>
+            </details>
+
+            <details>
+              <summary>Jak długo trwa terapia par i czy jest skuteczna?</summary>
+              <p>Czas trwania zależy od problemu i motywacji obojga partnerów. Zazwyczaj trwa kilka
+              miesięcy do około roku.</p>
+              <p>Skuteczność terapii zależy od zaangażowania i gotowości do pracy po obu stronach —
+              terapeuty i pary.</p>
+            </details>
+
+            <details>
+              <summary>Czym jest superwizja?</summary>
+              <p>Superwizja to spotkania psychoterapeuty z bardziej doświadczonym specjalistą,
+              podczas których omawia on swoją pracę (anonimowo, bez danych osobowych pacjentów).</p>
+              <p>Celem superwizji jest zapewnienie najwyższej jakości terapii i bezpieczeństwa
+              dla pacjentów.</p>
+            </details>
+
+            <details>
+              <summary>Czy to w porządku, że terapeuta poprosił o zgodę na nagrywanie sesji lub kontakt do mojego psychiatry?</summary>
+              <p>Tak — to standardowe, etyczne praktyki.</p>
+              <p>Terapeuta może poprosić o zgodę na nagranie sesji wyłącznie w celach szkoleniowych
+              lub superwizyjnych, zawsze z Twoją pisemną zgodą.</p>
+              <p>Kontakt do psychiatry lub innego specjalisty może być potrzebny dla zapewnienia
+              ciągłości opieki i bezpieczeństwa — zawsze z poszanowaniem Twojej prywatności.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ══════════ SPECJALIŚCI ══════════ -->
+    <section class="panel" id="panel-specjalisci" hidden>
+      <div class="opener">
+        <p class="eyebrow">Specjaliści</p>
+        <h1>Zespół</h1>
+      </div>
+
+      <div class="beat reveal">
+        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Dorota Pytel" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="role">certyfikowany psychotraumatolog, psychoterapeutka, terapeutka rodzinna,
+          socjoterapeutka, pedagog resocjalizacji</p>
+          <h2>Dorota Pytel</h2>
+          <p>Specjalizuje się w terapii indywidualnej dla nastolatków i dorosłych, którzy doświadczyli
+          kryzysu, traumy lub trudności emocjonalnych. Pracuje również z osobami z depresją,
+          zaburzeniem osobowości. Pracuje z parami i rodzinami, wspierając ich w lepszym rozumieniu
+          siebie i poprawie komunikacji. Prowadzi diagnozę w kierunku dysocjacyjnych zaburzeń
+          tożsamości testem TADS-I oraz diagnozy psychotraumatologiczne.</p>
+          <p class="note">Ukończyła całościowy kurs psychoterapii atestowany przez Polskie Towarzystwo
+          Psychiatryczne i akredytowany przez Polskie Towarzystwo Psychologiczne, czteroletnie
+          szkolenie z psychotraumatologii, Podyplomowe Studia Psychologii Klinicznej, szkolenie
+          z Systemowej Terapii Rodzin, Studium Zaburzeń Odżywiania przy Ogólnopolskim Centrum
+          Zaburzeń Odżywiania. Aktualnie uczy się w Podyplomowym Studium Psychoterapii dzieci
+          i młodzieży. Pracuje w nurcie integracyjnym ze szczególnym uwzględnieniem nurtu
+          psychodynamicznego i systemowego.</p>
+        </div>
+      </div>
+
+      <div class="beat reveal">
+        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Sylwia Ćwiek-Górska" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="role">psycholog, psychoterapeutka w procesie certyfikacji</p>
+          <h2>Sylwia Ćwiek-Górska</h2>
+          <p>Prowadzi psychoterapię indywidualną dla osób dorosłych.</p>
+          <p class="note">Ukończyła całościowy akredytowany kurs psychoterapii atestowany przez
+          SNP PTP i SP PTP. Członkini Sekcji Naukowej Psychoterapii Polskiego Towarzystwa
+          Psychiatrycznego oraz Sekcji Psychoterapii Polskiego Towarzystwa Psychologicznego.
+          Pracuje w podejściu ericksonowskim.</p>
+        </div>
+      </div>
+
+      <div class="beat reveal">
+        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Anna Szymańczyk" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="role">psycholog i psychoterapeutka w trakcie certyfikacji</p>
+          <h2>Anna Szymańczyk</h2>
+          <p>Pracuje z osobami dorosłymi. Ma doświadczenie w pracy z osobami przeżywającymi różnego
+          rodzaju traumy, kryzysy oraz stratę. Zawodowo była związana ze szpitalem św. Wojciecha
+          w Gdańsku, gdzie udzielała wsparcia psychologicznego kobietom w okresie okołoporodowym.
+          W ramach projektu „Przystanek Mama" prowadziła konsultacje psychologiczne, koncentrując się
+          na wczesnym wykrywaniu depresji poporodowej.</p>
+          <p class="note">Stale rozwija swoje kompetencje, uczestnicząc w licznych kursach
+          i szkoleniach. Jest członkiem Sekcji Psychoterapii Polskiego Towarzystwa Psychologicznego.
+          Pracuje w oparciu o model integracyjny, łącząc podejścia różnych szkół psychoterapeutycznych
+          i indywidualnie dostosowując metody pracy do potrzeb pacjentów.</p>
+        </div>
+      </div>
+
+      <div class="beat reveal">
+        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Agnieszka Nowak" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="role">psycholożka, psychoterapeutka integratywna i psychodietetyczka</p>
+          <h2>Agnieszka Nowak</h2>
+          <p>Certyfikowana Terapeutka Psychoterapii Pozytywnej Transkulturowej (WAPP, Wiesbaden,
+          Niemcy). Członkini Polskiego Towarzystwa Psychoterapii Stosowanej (PTPS).</p>
+          <p class="note">Pracuje w nurcie integratywnym, łącząc techniki ericksonowskie, systemowe
+          i Psychoterapię Pozytywną Transkulturową. Jej podejście opiera się na akceptacji,
+          elastyczności i dostosowaniu metod do indywidualnych potrzeb pacjenta, co umożliwia rozwój
+          jego wewnętrznego potencjału.</p>
+        </div>
+      </div>
+
+      <div class="beat reveal">
+        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Miriam Gajda" loading="lazy"></figure>
+        <div class="beat__text">
+          <p class="role">psycholog, psychoonkolog i psychoterapeutka</p>
+          <h2>Miriam Gajda</h2>
+          <p>Prowadzi psychoterapię indywidualną (dorosłych i młodzieży), terapię par oraz rodzin.
+          Zajmuje się również szkoleniami i warsztatami z obszaru psychoedukacji i rozwoju
+          umiejętności miękkich.</p>
+          <p class="note">Pracuje integracyjnie w podejściach systemowym i humanistycznym (Gestalt),
+          wykorzystując również techniki poznawczo-behawioralne oraz ACT (Terapia Akceptacji
+          i Zaangażowania). Doświadczenie zdobywała pracując w gabinecie prywatnym, podczas pracy
+          i staży klinicznych na oddziałach psychiatrycznych, w środowiskowych domach samopomocy
+          oraz w hospicjum.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ CENNIK ══════════ -->
+    <section class="panel" id="panel-cennik" hidden>
+      <div class="opener">
+        <p class="eyebrow">Stawki</p>
+        <h1>Cennik</h1>
+      </div>
+
+      <table class="price">
+        <tbody>
+          <tr>
+            <th scope="row">konsultacja<span>pierwsze 2-4 spotkania poprzedzające rozpoczęcie psychoterapii</span></th>
+            <td>50 min</td>
+            <td>180-220 zł</td>
+          </tr>
+          <tr>
+            <th scope="row">psychoterapia indywidualna<span>po okresie konsultacyjnym, dotyczy osób dorosłych i młodzieży po 13 r.ż.</span></th>
+            <td>50 min</td>
+            <td>180-220 zł</td>
+          </tr>
+          <tr>
+            <th scope="row">psychoterapia pary</th>
+            <td>50 min</td>
+            <td>250 zł</td>
+          </tr>
+          <tr>
+            <th scope="row">terapia rodzinna</th>
+            <td>75 min</td>
+            <td>300 zł</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <figure class="wide-figure reveal">
+        <img src="IMG/Waso_07.jpg" alt="Wnętrze ośrodka" loading="lazy">
+      </figure>
+    </section>
+
+    <!-- ══════════ KONTAKT ══════════ -->
+    <section class="panel" id="panel-kontakt" hidden>
+      <div class="opener">
+        <p class="eyebrow">Rejestracja</p>
+        <h1>Kontakt</h1>
+      </div>
+
+      <div class="beat reveal">
+        <figure class="beat__figure"><img src="IMG/Waso_08.jpg" alt="Wnętrze ośrodka" loading="lazy"></figure>
+        <div class="beat__text">
+          <h2>Poukładane Ośrodek Psychoterapii</h2>
+          <p>ul. Wassowskiego 6/1<br>80-225 Gdańsk</p>
+          <p><a href="mailto:pracowniapoukladane@gmail.com">pracowniapoukladane@gmail.com</a></p>
+        </div>
+      </div>
+
+      <figure class="wide-figure reveal">
+        <img src="IMG/Waso_09.jpg" alt="Wnętrze ośrodka" loading="lazy">
+      </figure>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <p class="footer__name">Poukładane</p>
+      <p class="footer__tag">Ośrodek psychoterapii</p>
+    </div>
+
+    <div class="footer__col">
+      <p class="footer__head">Kontakt</p>
+      <p>ul. Wassowskiego 6/1<br>80-225 Gdańsk</p>
+      <p><a href="mailto:pracowniapoukladane@gmail.com">pracowniapoukladane@gmail.com</a></p>
+    </div>
+
+    <div class="footer__col">
+      <p class="footer__head">Na stronie</p>
+      <p>
+        <a href="#osrodek" data-goto="osrodek">Ośrodek</a><br>
+        <a href="#specjalisci" data-goto="specjalisci">Specjaliści</a><br>
+        <a href="#cennik" data-goto="cennik">Cennik</a><br>
+        <a href="#kontakt" data-goto="kontakt">Kontakt</a>
+      </p>
+    </div>
+
+    <div class="footer__col">
+      <p class="footer__head">Dokumenty</p>
+      <p>
+        <a href="polityka-prywatnosci.html">Polityka prywatności</a><br>
+        <a href="standardy-ochrony-maloletnich.html">Standardy ochrony małoletnich</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="footer__help">
+    <p class="footer__head">Telefony pomocy</p>
+    <p>
+      Ogólnopolski telefon dla osób pokrzywdzonych przestępstwem <a href="tel:+48222309900">+48 222 309 900</a> ·
+      Ogólnopolskie Pogotowie dla Ofiar Przemocy w Rodzinie „Niebieska Linia" <a href="tel:800120002">800 120 002</a> ·
+      Telefon Zaufania Dla Dzieci i Młodzieży <a href="tel:116111">116 111</a>
+    </p>
+  </div>
+
+  <div class="footer__base">
+    <p>© <span id="year">2026</span> Poukładane. Wszystkie prawa zastrzeżone.</p>
+    <p><button class="footer__cookies" type="button" data-cookie-reopen>Ustawienia cookies</button></p>
+  </div>
+</footer>
+
+<!-- Powrót na górę -->
+<button class="to-top" type="button" data-to-top aria-label="Wróć na górę strony">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M12 19V5M12 5l-6 6M12 5l6 6" fill="none" stroke="currentColor"
+          stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<!-- Baner cookies -->
+<div class="cookies" id="cookies" hidden>
+  <div class="cookies__text">
+    <p class="cookies__title">Cookies</p>
+    <p>Używamy plików cookies niezbędnych do działania strony. Analityczne włączymy tylko,
+    jeśli wyrazisz zgodę. Szczegóły w <a href="polityka-prywatnosci.html">polityce prywatności</a>.</p>
+  </div>
+  <div class="cookies__actions">
+    <button class="btn btn--ghost" type="button" data-cookie="reject">Tylko niezbędne</button>
+    <button class="btn" type="button" data-cookie="accept">Akceptuję wszystkie</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
