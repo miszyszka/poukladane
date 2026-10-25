@@ -308,25 +308,33 @@ select(fromHash > -1 ? fromHash : 0, false);
 })();
 
 /* ────────────────────────────────────────────
-   9. ZESPÓŁ — przycisk „więcej”
-   Rozwija opis i przełącza portret na drugie ujęcie.
-   Drugie zdjęcie wczytuje się dopiero przy pierwszym rozwinięciu.
+   9. ZESPÓŁ — okno z pełnym opisem
+   Przycisk „więcej” otwiera natywny <dialog>: Esc zamyka,
+   ogniskowa zostaje w środku, tło jest nieklikalne.
+   Portret w oknie wczytuje się dopiero przy pierwszym otwarciu.
    ──────────────────────────────────────────── */
 document.querySelectorAll('.person__toggle').forEach((btn) => {
-  const card = btn.closest('.person');
-  const txt  = btn.querySelector('.person__toggle-txt');
-  if (!card) return;
+  const dialog = document.getElementById(btn.dataset.bio);
+  if (!dialog) return;
 
   btn.addEventListener('click', () => {
-    const open = card.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', String(open));
-    if (txt) txt.textContent = open ? 'mniej' : 'więcej';
-
-    // dociągnięcie drugiego portretu przy pierwszym otwarciu
-    const second = card.querySelector('.person__img--b[data-src]');
-    if (open && second) {
-      second.src = second.dataset.src;
-      second.removeAttribute('data-src');
+    const photo = dialog.querySelector('img[data-src]');
+    if (photo) {
+      photo.src = photo.dataset.src;
+      photo.removeAttribute('data-src');
     }
+    dialog.showModal();
+    const text = dialog.querySelector('.bio__text');
+    if (text) text.scrollTop = 0;
+  });
+});
+
+document.querySelectorAll('.bio').forEach((dialog) => {
+  const close = dialog.querySelector('.bio__close');
+  if (close) close.addEventListener('click', () => dialog.close());
+
+  // kliknięcie w tło poza oknem też zamyka
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
   });
 });

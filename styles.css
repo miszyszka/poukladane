@@ -902,7 +902,7 @@ body.cookies-open .to-top{
 
 
 /* ────────────────────────────────────────────
-   ZESPÓŁ — zdjęcie grupowe + karty terapeutek
+   ZESPÓŁ — zdjęcie grupowe + lista terapeutek
    ──────────────────────────────────────────── */
 .team-hero{
   overflow: hidden;
@@ -912,8 +912,8 @@ body.cookies-open .to-top{
   margin-bottom: 2.5rem;
 }
 /* kadr podciągnięty w górę — twarze zespołu są nad środkiem zdjęcia */
-.team-hero img{ object-position: center 42%; }
 .team-hero img{
+  object-position: center 42%;
   transition: transform 1.2s cubic-bezier(.2, .7, .3, 1);
 }
 .team-hero:hover img{ transform: scale(1.03); }
@@ -921,69 +921,40 @@ body.cookies-open .to-top{
 .team-intro{
   max-width: 54ch;
   color: var(--muted);
-  margin: 0 0 clamp(3rem, 6vw, 4.5rem);
+  margin: 0 0 clamp(2rem, 4vw, 3rem);
 }
 
+/* jedna terapeutka pod drugą, rozdzielone włosową kreską */
 .people{
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(2.5rem, 5vw, 3.5rem) clamp(1.75rem, 3vw, 2.5rem);
-  align-items: start;
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
 .person{
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: clamp(170px, 20vw, 240px) 1fr;
+  gap: clamp(1.75rem, 4vw, 3rem);
+  align-items: center;
+  padding: clamp(2rem, 4vw, 2.75rem) 0;
+  border-top: 1px solid var(--hair);
 }
+.person:last-child{ border-bottom: 1px solid var(--hair); }
 
-/* stopniowane wejście kart */
+/* stopniowane wejście wierszy */
 .people .person:nth-child(2){ transition-delay: .08s; }
 .people .person:nth-child(3){ transition-delay: .16s; }
 .people .person:nth-child(4){ transition-delay: .24s; }
-.people .person:nth-child(5){ transition-delay: .32s; }
 
 .person__photo{
-  position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: var(--round);
   background: var(--hair);
-  margin-bottom: 1.5rem;
 }
-
-.person__img{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity .65s ease, transform 1.2s cubic-bezier(.2, .7, .3, 1);
+.person__photo img{
+  transition: transform 1.2s cubic-bezier(.2, .7, .3, 1);
 }
-.person__img--b{ opacity: 0; }
-
-/* po rozwinięciu portret przechodzi w drugie ujęcie */
-.person.is-open .person__img--a{ opacity: 0; }
-.person.is-open .person__img--b{ opacity: 1; }
-
-.person__photo:hover .person__img{ transform: scale(1.035); }
-
-/* kafel zastępczy, gdy nie ma jeszcze zdjęcia */
-.person__photo--mono{
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,.14) 1.5px, transparent 1.6px)
-      0 0 / 22px 22px,
-    var(--main);
-}
-.person__mono{
-  font-family: var(--font-display);
-  font-size: clamp(2.6rem, 6vw, 3.6rem);
-  letter-spacing: .06em;
-  color: #fff;
-  opacity: .9;
-}
+.person__photo:hover img{ transform: scale(1.04); }
 
 .person__body{
   display: flex;
@@ -993,61 +964,166 @@ body.cookies-open .to-top{
 
 .person__name{
   margin: 0 0 .7rem;
-  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  font-size: clamp(1.35rem, 2.3vw, 1.75rem);
   line-height: 1.25;
 }
 
 .person__lead{
   color: var(--muted);
-  margin: 0 0 1.25rem;
-  max-width: 38ch;
+  margin: 0 0 1.4rem;
+  max-width: 46ch;
 }
 
-/* Przycisk zostaje tuż pod jednym zdaniem, opis rozwija się POD nim —
-   dzięki temu „więcej” nie ucieka na dół razem z tekstem. */
-.person__toggle{ order: 1; }
-.person__more{ order: 2; }
-
-/* rozwijany opis — animacja przez grid 0fr → 1fr */
-.person__more{
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  width: 100%;
-  transition: grid-template-rows .5s cubic-bezier(.3, .8, .3, 1),
-              opacity .4s ease,
-              margin-top .5s ease;
-}
-.person__more-in{ overflow: hidden; min-height: 0; }
-
-.person.is-open .person__more{
-  grid-template-rows: 1fr;
-  opacity: 1;
-  margin-top: 1.35rem;
-}
-
-.person__more p{ color: var(--muted); margin: 0 0 1rem; max-width: 44ch; }
-.person__more p:last-child{ margin-bottom: 0; }
-
-/* przycisk „więcej” */
 .person__toggle{
   display: inline-flex;
   align-items: center;
-  gap: .55rem;
+  gap: .6rem;
+}
+
+/* znak „+” przy przycisku */
+.person__plus{
+  position: relative;
+  width: .6rem;
+  height: .6rem;
+  transition: transform .4s cubic-bezier(.3, .8, .3, 1);
+}
+.person__plus::before,
+.person__plus::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  margin-top: -.75px;
+  background: currentColor;
+}
+.person__plus::after{ transform: rotate(90deg); }
+.person__toggle:hover .person__plus{ transform: rotate(90deg); }
+
+
+/* ────────────────────────────────────────────
+   OKNO Z PEŁNYM OPISEM — natywny <dialog>
+   ──────────────────────────────────────────── */
+.bio{
+  position: relative;
+  width: min(940px, calc(100vw - 2rem));
+  max-height: 88vh;
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--round) * 1.1);
+  background: var(--bg);
+  color: var(--ink);
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(15, 38, 24, .22);
+}
+
+.bio::backdrop{
+  background: rgba(15, 38, 24, .45);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.bio[open]{ animation: bioIn .38s cubic-bezier(.2, .8, .3, 1); }
+.bio[open]::backdrop{ animation: bioFade .38s ease; }
+
+@keyframes bioIn{
+  from{ opacity: 0; transform: translateY(16px) scale(.985); }
+  to  { opacity: 1; transform: none; }
+}
+@keyframes bioFade{
+  from{ opacity: 0; }
+  to  { opacity: 1; }
+}
+
+/* dopóki okno jest otwarte, tło się nie przewija */
+html:has(dialog[open]){ overflow: hidden; }
+
+/* Okno jest flexem (tylko gdy otwarte — inaczej nadpisalibyśmy
+   display:none, którym przeglądarka chowa zamknięty <dialog>).
+   Dzięki min-height:0 krótki opis daje niskie okno, a długi —
+   okno na 88vh z przewijaną kolumną tekstu. */
+.bio[open]{ display: flex; }
+
+.bio__grid{
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 36%) minmax(0, 1fr);
+}
+
+.bio__photo{ overflow: hidden; background: var(--hair); }
+.bio__photo img{
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+.bio__text{
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(2rem, 3.5vw, 3rem);
+  padding-right: clamp(3.25rem, 5vw, 4rem);
+}
+.bio__text h2{
+  margin: 0 0 1.1rem;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.2;
+}
+.bio__text p{ color: var(--muted); margin: 0 0 1.1rem; }
+.bio__text p:last-child{ margin-bottom: 0; }
+
+/* przycisk zamykający — krzyżyk w prawym górnym rogu */
+.bio__close{
+  position: absolute;
+  top: .85rem;
+  right: .85rem;
+  z-index: 3;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--hair);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--main);
+  font-family: var(--font-ui);
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(15, 38, 24, .12);
   transition: background .25s ease, color .25s ease,
               border-color .25s ease, transform .2s ease;
 }
-.person__toggle:active{ transform: translateY(1px); }
-
-.person__chev{
-  width: .5rem;
-  height: .5rem;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  transform: translateY(-2px) rotate(45deg);
-  transition: transform .4s cubic-bezier(.3, .8, .3, 1);
+.bio__close span{ display: block; margin-top: -2px; }
+.bio__close:hover{
+  background: var(--main);
+  border-color: var(--main);
+  color: #fff;
 }
-.person.is-open .person__chev{ transform: translateY(1px) rotate(-135deg); }
+.bio__close:active{ transform: scale(.93); }
+.bio__close:focus-visible{ outline: 2px solid var(--brass); outline-offset: 2px; }
+
+/* dane kontaktowe na dole okna */
+.bio__contact{
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hair);
+}
+.bio__contact-head{
+  font-size: .78rem !important;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--brass) !important;
+  margin: 0 0 .9rem !important;
+}
+.bio__contact p{ margin: 0 0 .55rem; }
+.bio__contact a{ color: var(--main); }
 
 
 /* ────────────────────────────────────────────
@@ -1144,24 +1220,35 @@ body.cookies-open .to-top{
 /* ────────────────────────────────────────────
    ZESPÓŁ + EKRAN POWITALNY — mniejsze ekrany
    ──────────────────────────────────────────── */
-/* dwie kolumny na węższych ekranach… */
-@media (max-width: 1099px){
-  .people{ grid-template-columns: repeat(2, 1fr); }
-}
-
-/* …i jedna na telefonie */
-@media (max-width: 700px){
-  .people{ grid-template-columns: 1fr; gap: 3rem; }
+@media (max-width: 760px){
+  /* zdjęcie nad opisem, nie obok */
+  .person{
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .person__photo{ width: min(260px, 70%); }
   .person__lead{ max-width: none; }
-  .person .role{ min-height: 0; }
   .team-hero{ aspect-ratio: 4 / 3; border-radius: var(--round); }
+
+  /* okno z opisem na pełny ekran telefonu */
+  .bio{
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+  }
+  .bio__grid{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .bio__photo{ aspect-ratio: 3 / 2; }
+  .bio__photo img{ min-height: 0; object-position: center 35%; }
+  .bio__text{ padding: 1.75rem 1.5rem 2.5rem; }
+
   #loader{ --ld: 26px; --lg: 18px; }
   .loader__word{ font-size: .82rem; letter-spacing: .34em; }
-}
-
-/* nazwiska w jednym rzędzie, mimo różnej długości specjalizacji */
-@media (min-width: 701px){
-  .person .role{ min-height: 2.8rem; }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -1170,15 +1257,17 @@ body.cookies-open .to-top{
   .loader__inner,
   .loader__word{ animation: none !important; }
   .loader__word{ opacity: .9; }
+  .bio[open],
+  .bio[open]::backdrop{ animation: none; }
   .team-hero img,
-  .person__img,
+  .person__photo img,
   .beat__figure img,
   .hero__figure img{ transition: none; }
   .team-hero:hover img,
-  .person__photo:hover .person__img,
+  .person__photo:hover img,
   .beat__figure:hover img,
   .hero__figure:hover img{ transform: none; }
-  .person__more{ transition: none; }
-  .person__chev{ transition: none; }
+  .person__plus{ transition: none; }
+  .person__toggle:hover .person__plus{ transform: none; }
   .people .person{ transition-delay: 0s !important; }
 }
