@@ -268,3 +268,65 @@ document.addEventListener('click', (e) => {
    ──────────────────────────────────────────── */
 const fromHash = SECTIONS.indexOf(location.hash.replace('#', ''));
 select(fromHash > -1 ? fromHash : 0, false);
+
+/* ────────────────────────────────────────────
+   8. EKRAN POWITALNY
+   Kropki ze znaku firmowego chodzą przez ~3 s, potem ekran znika.
+   Można go pominąć kliknięciem albo dowolnym klawiszem.
+   ──────────────────────────────────────────── */
+(() => {
+  const loader = document.getElementById('loader');
+  const html   = document.documentElement;
+
+  const release = () => html.classList.remove('is-loading');
+
+  if (!loader) { release(); return; }
+
+  // przy ograniczonych animacjach pokazujemy znak tylko na moment
+  const HOLD = reduceMotion ? 600 : 3000;
+  const started = Date.now();
+  let closed = false;
+
+  const hide = () => {
+    if (closed) return;
+    closed = true;
+    loader.classList.add('is-done');
+    release();
+    setTimeout(() => loader.remove(), 800);
+  };
+
+  const finish = () => setTimeout(hide, Math.max(0, HOLD - (Date.now() - started)));
+
+  if (document.readyState === 'complete') finish();
+  else window.addEventListener('load', finish, { once: true });
+
+  // bezpiecznik: cokolwiek się stanie, po 6 s strona jest dostępna
+  setTimeout(hide, 6000);
+
+  loader.addEventListener('click', hide);
+  window.addEventListener('keydown', hide, { once: true });
+})();
+
+/* ────────────────────────────────────────────
+   9. ZESPÓŁ — przycisk „więcej”
+   Rozwija opis i przełącza portret na drugie ujęcie.
+   Drugie zdjęcie wczytuje się dopiero przy pierwszym rozwinięciu.
+   ──────────────────────────────────────────── */
+document.querySelectorAll('.person__toggle').forEach((btn) => {
+  const card = btn.closest('.person');
+  const txt  = btn.querySelector('.person__toggle-txt');
+  if (!card) return;
+
+  btn.addEventListener('click', () => {
+    const open = card.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', String(open));
+    if (txt) txt.textContent = open ? 'mniej' : 'więcej';
+
+    // dociągnięcie drugiego portretu przy pierwszym otwarciu
+    const second = card.querySelector('.person__img--b[data-src]');
+    if (open && second) {
+      second.src = second.dataset.src;
+      second.removeAttribute('data-src');
+    }
+  });
+});

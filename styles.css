@@ -65,7 +65,7 @@ body::before{
   position: sticky;
   top: 0;
   z-index: 30;
-  background: var(--bg);
+  background: transparent;   /* bez białej płyty — prześwituje tło strony */
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -75,19 +75,46 @@ body::before{
   padding: 2rem 2.5rem 1.75rem;
 }
 
-/* delikatny cień, gdy belka przykleja się do góry i podjeżdża pod nią treść */
-.masthead{ transition: box-shadow .3s ease, padding .3s ease; }
-body.is-stuck .masthead{ box-shadow: 0 6px 22px rgba(15, 38, 24, .07); }
+.masthead{ transition: padding .3s ease; }
 
-/* cienka linia pod belką — na całą szerokość okna */
+/* Na górze strony belka jest całkiem przezroczysta.
+   Dopiero przy scrollu pojawia się delikatna, rozmyta płyta w kolorze tła —
+   obie warstwy idą na całą szerokość okna, nie tylko na szerokość kolumny. */
+.masthead::before,
 .masthead::after{
   content: "";
   position: absolute;
-  left: 2.5rem;
-  right: 2.5rem;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+.masthead::before{
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  backdrop-filter: blur(14px) saturate(1.25);
+}
+
+/* symboliczny, cieniutki pasek pod belką */
+.masthead::after{
   bottom: 0;
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--hair) 12%, var(--hair) 88%, transparent);
+  background: linear-gradient(to right,
+              transparent, var(--hair) 18%, var(--hair) 82%, transparent);
+}
+
+body.is-stuck .masthead::before,
+body.is-stuck .masthead::after{ opacity: 1; }
+
+/* przeglądarki bez color-mix: zwykłe półprzezroczyste tło */
+@supports not (background: color-mix(in srgb, red 50%, transparent)){
+  .masthead::before{ background: rgba(245, 243, 238, .82); }
 }
 
 .masthead__logo{ display: block; line-height: 0; }
@@ -791,6 +818,265 @@ body.cookies-open .to-top{
 .hero__text h1{ font-size: clamp(1.9rem, 3.2vw, 2.7rem); max-width: 22ch; }
 .opener h1{ max-width: none; }
 
+
+/* ────────────────────────────────────────────
+   EKRAN POWITALNY — kropki ze znaku firmowego
+   Znak w logo to siatka 4×4 kropek, które zlewają się
+   w pigułki. Tutaj robią to na przemian: w poziomie,
+   potem w pionie — i z powrotem.
+   ──────────────────────────────────────────── */
+#loader{
+  --ld: 34px;          /* średnica kropki */
+  --lg: 22px;          /* odstęp między kropkami */
+  /* dojazd do sąsiada: tyle, żeby kropki zlały się w pigułkę 2:1,
+     jak w znaku z logo. Liczone od rozstawu, więc skaluje się z rozmiarem. */
+  --lx: calc((var(--ld) + var(--lg)) * .3);
+}
+
+.loader__inner{
+  display: grid;
+  justify-items: center;
+  gap: 2.2rem;
+  animation: loaderIn .7s ease both;
+}
+
+.loader__goo{
+  display: grid;
+  grid-template-columns: repeat(4, var(--ld));
+  grid-auto-rows: var(--ld);
+  gap: var(--lg);
+  filter: url('#gooeyness');
+  animation: loaderBreathe 2.6s ease-in-out infinite;
+}
+
+.loader__dot{
+  width: var(--ld);
+  height: var(--ld);
+  border-radius: 50%;
+  background: var(--main);
+  animation: loaderGoo 2.6s ease-in-out infinite;
+}
+
+/* kolumny nieparzyste jadą w prawo, parzyste w lewo → pigułki poziome */
+.loader__dot:nth-child(odd){  --hx: var(--lx); }
+.loader__dot:nth-child(even){ --hx: calc(var(--lx) * -1); }
+
+/* rzędy 1 i 3 jadą w dół, 2 i 4 w górę → pigułki pionowe */
+.loader__dot:nth-child(-n+4){ --vy: var(--lx); }
+.loader__dot:nth-child(n+5):nth-child(-n+8){  --vy: calc(var(--lx) * -1); }
+.loader__dot:nth-child(n+9):nth-child(-n+12){ --vy: var(--lx); }
+.loader__dot:nth-child(n+13){ --vy: calc(var(--lx) * -1); }
+
+@keyframes loaderGoo{
+  0%,  10%  { transform: translate(0, 0); }
+  22%, 34%  { transform: translate(var(--hx), 0); }
+  46%, 52%  { transform: translate(0, 0); }
+  64%, 76%  { transform: translate(0, var(--vy)); }
+  88%, 100% { transform: translate(0, 0); }
+}
+
+@keyframes loaderBreathe{
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+@keyframes loaderIn{
+  from{ opacity: 0; transform: scale(.9); }
+  to  { opacity: 1; transform: none; }
+}
+
+.loader__word{
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  animation: loaderWord 1s ease .35s both;
+}
+
+@keyframes loaderWord{
+  from{ opacity: 0; transform: translateY(8px); }
+  to  { opacity: .9; transform: none; }
+}
+
+
+/* ────────────────────────────────────────────
+   ZESPÓŁ — zdjęcie grupowe + karty terapeutek
+   ──────────────────────────────────────────── */
+.team-hero{
+  overflow: hidden;
+  border-radius: calc(var(--round) * 1.4);
+  background: var(--hair);
+  aspect-ratio: 16 / 9;
+  margin-bottom: 2.5rem;
+}
+/* kadr podciągnięty w górę — twarze zespołu są nad środkiem zdjęcia */
+.team-hero img{ object-position: center 42%; }
+.team-hero img{
+  transition: transform 1.2s cubic-bezier(.2, .7, .3, 1);
+}
+.team-hero:hover img{ transform: scale(1.03); }
+
+.team-intro{
+  max-width: 54ch;
+  color: var(--muted);
+  margin: 0 0 clamp(3rem, 6vw, 4.5rem);
+}
+
+.people{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2.5rem, 5vw, 3.5rem) clamp(1.75rem, 3vw, 2.5rem);
+  align-items: start;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+}
+
+.person{
+  display: flex;
+  flex-direction: column;
+}
+
+/* stopniowane wejście kart */
+.people .person:nth-child(2){ transition-delay: .08s; }
+.people .person:nth-child(3){ transition-delay: .16s; }
+.people .person:nth-child(4){ transition-delay: .24s; }
+.people .person:nth-child(5){ transition-delay: .32s; }
+
+.person__photo{
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--round);
+  background: var(--hair);
+  margin-bottom: 1.5rem;
+}
+
+.person__img{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity .65s ease, transform 1.2s cubic-bezier(.2, .7, .3, 1);
+}
+.person__img--b{ opacity: 0; }
+
+/* po rozwinięciu portret przechodzi w drugie ujęcie */
+.person.is-open .person__img--a{ opacity: 0; }
+.person.is-open .person__img--b{ opacity: 1; }
+
+.person__photo:hover .person__img{ transform: scale(1.035); }
+
+/* kafel zastępczy, gdy nie ma jeszcze zdjęcia */
+.person__photo--mono{
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,.14) 1.5px, transparent 1.6px)
+      0 0 / 22px 22px,
+    var(--main);
+}
+.person__mono{
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 3.6rem);
+  letter-spacing: .06em;
+  color: #fff;
+  opacity: .9;
+}
+
+.person__body{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.person__name{
+  margin: 0 0 .7rem;
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  line-height: 1.25;
+}
+
+.person__lead{
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+  max-width: 38ch;
+}
+
+/* Przycisk zostaje tuż pod jednym zdaniem, opis rozwija się POD nim —
+   dzięki temu „więcej” nie ucieka na dół razem z tekstem. */
+.person__toggle{ order: 1; }
+.person__more{ order: 2; }
+
+/* rozwijany opis — animacja przez grid 0fr → 1fr */
+.person__more{
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  width: 100%;
+  transition: grid-template-rows .5s cubic-bezier(.3, .8, .3, 1),
+              opacity .4s ease,
+              margin-top .5s ease;
+}
+.person__more-in{ overflow: hidden; min-height: 0; }
+
+.person.is-open .person__more{
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 1.35rem;
+}
+
+.person__more p{ color: var(--muted); margin: 0 0 1rem; max-width: 44ch; }
+.person__more p:last-child{ margin-bottom: 0; }
+
+/* przycisk „więcej” */
+.person__toggle{
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  transition: background .25s ease, color .25s ease,
+              border-color .25s ease, transform .2s ease;
+}
+.person__toggle:active{ transform: translateY(1px); }
+
+.person__chev{
+  width: .5rem;
+  height: .5rem;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform .4s cubic-bezier(.3, .8, .3, 1);
+}
+.person.is-open .person__chev{ transform: translateY(1px) rotate(-135deg); }
+
+
+/* ────────────────────────────────────────────
+   DROBNE OŻYWIENIE — delikatne, nienachalne
+   ──────────────────────────────────────────── */
+
+/* zdjęcia wnętrz lekko przybliżają się pod kursorem */
+.beat__figure,
+.hero__figure{ overflow: hidden; }
+.beat__figure img,
+.hero__figure img{
+  transition: transform 1.2s cubic-bezier(.2, .7, .3, 1);
+}
+.beat__figure:hover img,
+.hero__figure:hover img{ transform: scale(1.04); }
+
+/* strzałka w odnośniku „Kontakt →” lekko odjeżdża */
+.cta__link{ display: inline-flex; gap: .35rem; }
+.cta__link::after{
+  content: "";
+  transition: transform .3s ease;
+}
+.cta__link:hover{ letter-spacing: .01em; }
+
+/* przyciski reagują na wciśnięcie */
+.btn{ transition: background .25s ease, color .25s ease,
+                  border-color .25s ease, transform .2s ease; }
+.btn:active{ transform: translateY(1px); }
+
 /* ────────────────────────────────────────────
    RESPONSYWNOŚĆ
    ──────────────────────────────────────────── */
@@ -804,7 +1090,6 @@ body.cookies-open .to-top{
   }
   .nav{ align-items: center; justify-self: center; }
   .masthead__spacer{ display: none; }
-  .masthead::after{ left: 1.5rem; right: 1.5rem; }
 
   /* po przewinięciu w belce zostaje samo menu — logo znika,
      żeby przyklejony pasek nie zjadał połowy ekranu telefonu */
@@ -854,4 +1139,46 @@ body.cookies-open .to-top{
   .nav__ball, .nav__dot, .nav__label{ transition-duration: 1ms; }
   .panel{ animation: none !important; }
   .reveal{ opacity: 1; transform: none; transition: none; }
+}
+
+/* ────────────────────────────────────────────
+   ZESPÓŁ + EKRAN POWITALNY — mniejsze ekrany
+   ──────────────────────────────────────────── */
+/* dwie kolumny na węższych ekranach… */
+@media (max-width: 1099px){
+  .people{ grid-template-columns: repeat(2, 1fr); }
+}
+
+/* …i jedna na telefonie */
+@media (max-width: 700px){
+  .people{ grid-template-columns: 1fr; gap: 3rem; }
+  .person__lead{ max-width: none; }
+  .person .role{ min-height: 0; }
+  .team-hero{ aspect-ratio: 4 / 3; border-radius: var(--round); }
+  #loader{ --ld: 26px; --lg: 18px; }
+  .loader__word{ font-size: .82rem; letter-spacing: .34em; }
+}
+
+/* nazwiska w jednym rzędzie, mimo różnej długości specjalizacji */
+@media (min-width: 701px){
+  .person .role{ min-height: 2.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .loader__goo,
+  .loader__dot,
+  .loader__inner,
+  .loader__word{ animation: none !important; }
+  .loader__word{ opacity: .9; }
+  .team-hero img,
+  .person__img,
+  .beat__figure img,
+  .hero__figure img{ transition: none; }
+  .team-hero:hover img,
+  .person__photo:hover .person__img,
+  .beat__figure:hover img,
+  .hero__figure:hover img{ transform: none; }
+  .person__more{ transition: none; }
+  .person__chev{ transition: none; }
+  .people .person{ transition-delay: 0s !important; }
 }

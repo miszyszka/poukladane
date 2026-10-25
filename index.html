@@ -11,6 +11,31 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Fraunces:opsz,wght@9..144,300..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<meta name="theme-color" content="#F5F3EE">
+
+<!-- Ekran powitalny musi się pojawić od razu, zanim wczyta się styles.css,
+     dlatego jego podstawowe style są tutaj, w <head>. -->
+<style>
+  html.is-loading, html.is-loading body{ overflow: hidden; }
+  #loader{
+    position: fixed; inset: 0; z-index: 9999;
+    display: grid; place-items: center;
+    background: #F5F3EE;
+    transition: opacity .7s ease, visibility .7s;
+  }
+  #loader.is-done{ opacity: 0; visibility: hidden; pointer-events: none; }
+</style>
+<script>
+  /* Blokada przewijania musi wejść przed pierwszym malowaniem,
+     żeby strona nie mignęła pod ekranem powitalnym. */
+  document.documentElement.classList.add('is-loading');
+  /* Gdyby skrypt strony się nie wczytał — i tak odblokuj po 8 s. */
+  setTimeout(function(){
+    document.documentElement.classList.remove('is-loading');
+    var l = document.getElementById('loader');
+    if (l) l.classList.add('is-done');
+  }, 8000);
+</script>
 </head>
 <body>
 
@@ -29,6 +54,33 @@
     </filter>
   </defs>
 </svg>
+
+<!-- ══════════ EKRAN POWITALNY ══════════
+     Kropki ułożone jak w znaku z logo: łączą się w pigułki i rozłączają.
+     Znika po ~3 s (albo wcześniej, jeśli ktoś kliknie / wciśnie klawisz). -->
+<div id="loader" role="status" aria-label="Wczytywanie strony">
+  <div class="loader__inner">
+    <div class="loader__goo" aria-hidden="true">
+      <span class="loader__dot" style="--c:0;--r:0"></span>
+      <span class="loader__dot" style="--c:1;--r:0"></span>
+      <span class="loader__dot" style="--c:2;--r:0"></span>
+      <span class="loader__dot" style="--c:3;--r:0"></span>
+      <span class="loader__dot" style="--c:0;--r:1"></span>
+      <span class="loader__dot" style="--c:1;--r:1"></span>
+      <span class="loader__dot" style="--c:2;--r:1"></span>
+      <span class="loader__dot" style="--c:3;--r:1"></span>
+      <span class="loader__dot" style="--c:0;--r:2"></span>
+      <span class="loader__dot" style="--c:1;--r:2"></span>
+      <span class="loader__dot" style="--c:2;--r:2"></span>
+      <span class="loader__dot" style="--c:3;--r:2"></span>
+      <span class="loader__dot" style="--c:0;--r:3"></span>
+      <span class="loader__dot" style="--c:1;--r:3"></span>
+      <span class="loader__dot" style="--c:2;--r:3"></span>
+      <span class="loader__dot" style="--c:3;--r:3"></span>
+    </div>
+    <p class="loader__word" aria-hidden="true">Poukładane</p>
+  </div>
+</div>
 
 <!-- Belka: logo po lewej, menu po prawej -->
 <header class="masthead">
@@ -300,85 +352,197 @@
         <h1>Zespół</h1>
       </div>
 
-      <div class="beat reveal">
-        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Dorota Pytel" loading="lazy"></figure>
-        <div class="beat__text">
-          <p class="role">certyfikowany psychotraumatolog, psychoterapeutka, terapeutka rodzinna,
-          socjoterapeutka, pedagog resocjalizacji</p>
-          <h2>Dorota Pytel</h2>
-          <p>Specjalizuje się w terapii indywidualnej dla nastolatków i dorosłych, którzy doświadczyli
-          kryzysu, traumy lub trudności emocjonalnych. Pracuje również z osobami z depresją,
-          zaburzeniem osobowości. Pracuje z parami i rodzinami, wspierając ich w lepszym rozumieniu
-          siebie i poprawie komunikacji. Prowadzi diagnozę w kierunku dysocjacyjnych zaburzeń
-          tożsamości testem TADS-I oraz diagnozy psychotraumatologiczne.</p>
-          <p class="note">Ukończyła całościowy kurs psychoterapii atestowany przez Polskie Towarzystwo
-          Psychiatryczne i akredytowany przez Polskie Towarzystwo Psychologiczne, czteroletnie
-          szkolenie z psychotraumatologii, Podyplomowe Studia Psychologii Klinicznej, szkolenie
-          z Systemowej Terapii Rodzin, Studium Zaburzeń Odżywiania przy Ogólnopolskim Centrum
-          Zaburzeń Odżywiania. Aktualnie uczy się w Podyplomowym Studium Psychoterapii dzieci
-          i młodzieży. Pracuje w nurcie integracyjnym ze szczególnym uwzględnieniem nurtu
-          psychodynamicznego i systemowego.</p>
-        </div>
-      </div>
+      <!-- zdjęcie grupowe całego zespołu -->
+      <figure class="team-hero reveal">
+        <img src="IMG/zespol/zespol_16.jpg"
+             alt="Zespół ośrodka Poukładane" loading="lazy">
+      </figure>
 
-      <div class="beat reveal">
-        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Sylwia Ćwiek-Górska" loading="lazy"></figure>
-        <div class="beat__text">
-          <p class="role">psycholog, psychoterapeutka w procesie certyfikacji</p>
-          <h2>Sylwia Ćwiek-Górska</h2>
-          <p>Prowadzi psychoterapię indywidualną dla osób dorosłych.</p>
-          <p class="note">Ukończyła całościowy akredytowany kurs psychoterapii atestowany przez
-          SNP PTP i SP PTP. Członkini Sekcji Naukowej Psychoterapii Polskiego Towarzystwa
-          Psychiatrycznego oraz Sekcji Psychoterapii Polskiego Towarzystwa Psychologicznego.
-          Pracuje w podejściu ericksonowskim.</p>
-        </div>
-      </div>
+      <p class="team-intro reveal">Tworzymy zespół psychoterapeutek o różnych
+      specjalizacjach i doświadczeniu. Poniżej krótko o każdej z nas —
+      rozwiń opis, żeby przeczytać więcej.</p>
 
-      <div class="beat reveal">
-        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Anna Szymańczyk" loading="lazy"></figure>
-        <div class="beat__text">
-          <p class="role">psycholog i psychoterapeutka w trakcie certyfikacji</p>
-          <h2>Anna Szymańczyk</h2>
-          <p>Pracuje z osobami dorosłymi. Ma doświadczenie w pracy z osobami przeżywającymi różnego
-          rodzaju traumy, kryzysy oraz stratę. Zawodowo była związana ze szpitalem św. Wojciecha
-          w Gdańsku, gdzie udzielała wsparcia psychologicznego kobietom w okresie okołoporodowym.
-          W ramach projektu „Przystanek Mama" prowadziła konsultacje psychologiczne, koncentrując się
-          na wczesnym wykrywaniu depresji poporodowej.</p>
-          <p class="note">Stale rozwija swoje kompetencje, uczestnicząc w licznych kursach
-          i szkoleniach. Jest członkiem Sekcji Psychoterapii Polskiego Towarzystwa Psychologicznego.
-          Pracuje w oparciu o model integracyjny, łącząc podejścia różnych szkół psychoterapeutycznych
-          i indywidualnie dostosowując metody pracy do potrzeb pacjentów.</p>
-        </div>
-      </div>
+      <div class="people">
 
-      <div class="beat reveal">
-        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Agnieszka Nowak" loading="lazy"></figure>
-        <div class="beat__text">
-          <p class="role">psycholożka, psychoterapeutka integratywna i psychodietetyczka</p>
-          <h2>Agnieszka Nowak</h2>
-          <p>Certyfikowana Terapeutka Psychoterapii Pozytywnej Transkulturowej (WAPP, Wiesbaden,
-          Niemcy). Członkini Polskiego Towarzystwa Psychoterapii Stosowanej (PTPS).</p>
-          <p class="note">Pracuje w nurcie integratywnym, łącząc techniki ericksonowskie, systemowe
-          i Psychoterapię Pozytywną Transkulturową. Jej podejście opiera się na akceptacji,
-          elastyczności i dostosowaniu metod do indywidualnych potrzeb pacjenta, co umożliwia rozwój
-          jego wewnętrznego potencjału.</p>
-        </div>
-      </div>
+        <!-- ───────── Dorota Pytel ───────── -->
+        <article class="person reveal">
+          <figure class="person__photo">
+            <img class="person__img person__img--a" src="IMG/zespol/zespol_09.jpg"
+                 alt="Dorota Pytel" loading="lazy">
+            <img class="person__img person__img--b" data-src="IMG/zespol/zespol_08.jpg"
+                 alt="" aria-hidden="true">
+          </figure>
+          <div class="person__body">
+            <p class="role">psychotraumatolog, psychoterapeutka rodzinna</p>
+            <h2 class="person__name">Dorota Pytel</h2>
+            <p class="person__lead">Pracuje z młodzieżą i dorosłymi po kryzysie
+            i traumie, prowadzi też terapię par oraz rodzin.</p>
 
-      <div class="beat reveal">
-        <figure class="beat__figure beat__figure--round"><img src="IMG/portrait.jpg" alt="Miriam Gajda" loading="lazy"></figure>
-        <div class="beat__text">
-          <p class="role">psycholog, psychoonkolog i psychoterapeutka</p>
-          <h2>Miriam Gajda</h2>
-          <p>Prowadzi psychoterapię indywidualną (dorosłych i młodzieży), terapię par oraz rodzin.
-          Zajmuje się również szkoleniami i warsztatami z obszaru psychoedukacji i rozwoju
-          umiejętności miękkich.</p>
-          <p class="note">Pracuje integracyjnie w podejściach systemowym i humanistycznym (Gestalt),
-          wykorzystując również techniki poznawczo-behawioralne oraz ACT (Terapia Akceptacji
-          i Zaangażowania). Doświadczenie zdobywała pracując w gabinecie prywatnym, podczas pracy
-          i staży klinicznych na oddziałach psychiatrycznych, w środowiskowych domach samopomocy
-          oraz w hospicjum.</p>
-        </div>
+            <div class="person__more" id="more-dorota">
+              <div class="person__more-in">
+                <p>Specjalizuje się w terapii indywidualnej dla nastolatków i dorosłych,
+                którzy doświadczyli kryzysu, traumy lub trudności emocjonalnych. Pracuje
+                również z osobami z depresją, zaburzeniem osobowości. Pracuje z parami
+                i rodzinami, wspierając ich w lepszym rozumieniu siebie i poprawie
+                komunikacji. Prowadzi diagnozę w kierunku dysocjacyjnych zaburzeń
+                tożsamości testem TADS-I oraz diagnozy psychotraumatologiczne.</p>
+                <p class="note">Ukończyła całościowy kurs psychoterapii atestowany przez
+                Polskie Towarzystwo Psychiatryczne i akredytowany przez Polskie Towarzystwo
+                Psychologiczne, czteroletnie szkolenie z psychotraumatologii, Podyplomowe
+                Studia Psychologii Klinicznej, szkolenie z Systemowej Terapii Rodzin,
+                Studium Zaburzeń Odżywiania przy Ogólnopolskim Centrum Zaburzeń Odżywiania.
+                Aktualnie uczy się w Podyplomowym Studium Psychoterapii dzieci i młodzieży.
+                Pracuje w nurcie integracyjnym ze szczególnym uwzględnieniem nurtu
+                psychodynamicznego i systemowego.</p>
+              </div>
+            </div>
+
+            <button class="btn btn--ghost person__toggle" type="button"
+                    aria-expanded="false" aria-controls="more-dorota">
+              <span class="person__toggle-txt">więcej</span>
+              <span class="person__chev" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ───────── Sylwia Ćwiek-Górska ───────── -->
+        <article class="person reveal">
+          <figure class="person__photo">
+            <img class="person__img person__img--a" src="IMG/zespol/zespol_13.jpg"
+                 alt="Sylwia Ćwiek-Górska" loading="lazy">
+            <img class="person__img person__img--b" data-src="IMG/zespol/zespol_10.jpg"
+                 alt="" aria-hidden="true">
+          </figure>
+          <div class="person__body">
+            <p class="role">psycholog, psychoterapeutka w procesie certyfikacji</p>
+            <h2 class="person__name">Sylwia Ćwiek-Górska</h2>
+            <p class="person__lead">Prowadzi psychoterapię indywidualną osób dorosłych
+            w podejściu ericksonowskim.</p>
+
+            <div class="person__more" id="more-sylwia">
+              <div class="person__more-in">
+                <p>Prowadzi psychoterapię indywidualną dla osób dorosłych.</p>
+                <p class="note">Ukończyła całościowy akredytowany kurs psychoterapii
+                atestowany przez SNP PTP i SP PTP. Członkini Sekcji Naukowej Psychoterapii
+                Polskiego Towarzystwa Psychiatrycznego oraz Sekcji Psychoterapii Polskiego
+                Towarzystwa Psychologicznego. Pracuje w podejściu ericksonowskim.</p>
+              </div>
+            </div>
+
+            <button class="btn btn--ghost person__toggle" type="button"
+                    aria-expanded="false" aria-controls="more-sylwia">
+              <span class="person__toggle-txt">więcej</span>
+              <span class="person__chev" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ───────── Anna Szymańczyk ───────── -->
+        <article class="person reveal">
+          <figure class="person__photo">
+            <img class="person__img person__img--a" src="IMG/zespol/zespol_06.jpg"
+                 alt="Anna Szymańczyk" loading="lazy">
+            <img class="person__img person__img--b" data-src="IMG/zespol/zespol_04.jpg"
+                 alt="" aria-hidden="true">
+          </figure>
+          <div class="person__body">
+            <p class="role">psycholog, psychoterapeutka w trakcie certyfikacji</p>
+            <h2 class="person__name">Anna Szymańczyk</h2>
+            <p class="person__lead">Towarzyszy dorosłym w traumie, kryzysie i stracie;
+            wspiera kobiety w okresie okołoporodowym.</p>
+
+            <div class="person__more" id="more-anna">
+              <div class="person__more-in">
+                <p>Pracuje z osobami dorosłymi. Ma doświadczenie w pracy z osobami
+                przeżywającymi różnego rodzaju traumy, kryzysy oraz stratę. Zawodowo była
+                związana ze szpitalem św. Wojciecha w Gdańsku, gdzie udzielała wsparcia
+                psychologicznego kobietom w okresie okołoporodowym. W ramach projektu
+                „Przystanek Mama" prowadziła konsultacje psychologiczne, koncentrując się
+                na wczesnym wykrywaniu depresji poporodowej.</p>
+                <p class="note">Stale rozwija swoje kompetencje, uczestnicząc w licznych
+                kursach i szkoleniach. Jest członkiem Sekcji Psychoterapii Polskiego
+                Towarzystwa Psychologicznego. Pracuje w oparciu o model integracyjny,
+                łącząc podejścia różnych szkół psychoterapeutycznych i indywidualnie
+                dostosowując metody pracy do potrzeb pacjentów.</p>
+              </div>
+            </div>
+
+            <button class="btn btn--ghost person__toggle" type="button"
+                    aria-expanded="false" aria-controls="more-anna">
+              <span class="person__toggle-txt">więcej</span>
+              <span class="person__chev" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ───────── Miriam Gajda ───────── -->
+        <article class="person reveal">
+          <figure class="person__photo">
+            <img class="person__img person__img--a" src="IMG/zespol/zespol_02.jpg"
+                 alt="Miriam Gajda" loading="lazy">
+            <img class="person__img person__img--b" data-src="IMG/zespol/zespol_03.jpg"
+                 alt="" aria-hidden="true">
+          </figure>
+          <div class="person__body">
+            <p class="role">psycholog, psychoonkolog i psychoterapeutka</p>
+            <h2 class="person__name">Miriam Gajda</h2>
+            <p class="person__lead">Prowadzi terapię indywidualną dorosłych i młodzieży,
+            a także terapię par oraz rodzin.</p>
+
+            <div class="person__more" id="more-miriam">
+              <div class="person__more-in">
+                <p>Prowadzi psychoterapię indywidualną (dorosłych i młodzieży), terapię par
+                oraz rodzin. Zajmuje się również szkoleniami i warsztatami z obszaru
+                psychoedukacji i rozwoju umiejętności miękkich.</p>
+                <p class="note">Pracuje integracyjnie w podejściach systemowym
+                i humanistycznym (Gestalt), wykorzystując również techniki
+                poznawczo-behawioralne oraz ACT (Terapia Akceptacji i Zaangażowania).
+                Doświadczenie zdobywała pracując w gabinecie prywatnym, podczas pracy
+                i staży klinicznych na oddziałach psychiatrycznych, w środowiskowych
+                domach samopomocy oraz w hospicjum.</p>
+              </div>
+            </div>
+
+            <button class="btn btn--ghost person__toggle" type="button"
+                    aria-expanded="false" aria-controls="more-miriam">
+              <span class="person__toggle-txt">więcej</span>
+              <span class="person__chev" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
+        <!-- ───────── Agnieszka Nowak ───────── -->
+        <article class="person reveal">
+          <figure class="person__photo person__photo--mono">
+            <span class="person__mono" aria-hidden="true">AN</span>
+          </figure>
+          <div class="person__body">
+            <p class="role">psychoterapeutka integratywna, psychodietetyczka</p>
+            <h2 class="person__name">Agnieszka Nowak</h2>
+            <p class="person__lead">Pracuje integratywnie, łącząc Psychoterapię Pozytywną
+            Transkulturową z technikami ericksonowskimi.</p>
+
+            <div class="person__more" id="more-agnieszka">
+              <div class="person__more-in">
+                <p>Certyfikowana Terapeutka Psychoterapii Pozytywnej Transkulturowej
+                (WAPP, Wiesbaden, Niemcy). Członkini Polskiego Towarzystwa Psychoterapii
+                Stosowanej (PTPS).</p>
+                <p class="note">Pracuje w nurcie integratywnym, łącząc techniki
+                ericksonowskie, systemowe i Psychoterapię Pozytywną Transkulturową.
+                Jej podejście opiera się na akceptacji, elastyczności i dostosowaniu metod
+                do indywidualnych potrzeb pacjenta, co umożliwia rozwój jego wewnętrznego
+                potencjału.</p>
+              </div>
+            </div>
+
+            <button class="btn btn--ghost person__toggle" type="button"
+                    aria-expanded="false" aria-controls="more-agnieszka">
+              <span class="person__toggle-txt">więcej</span>
+              <span class="person__chev" aria-hidden="true"></span>
+            </button>
+          </div>
+        </article>
+
       </div>
     </section>
 
